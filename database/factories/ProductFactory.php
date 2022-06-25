@@ -17,11 +17,12 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'title'=>$this->faker->word(random_int(10,25)),
-            'description'=>$this->faker->word(random_int(26,45)),
+            'title'=>$this->faker->words(random_int(3,12),true),
+            'description'=>$this->faker->words(random_int(26,45),true),
             'type_id'=>1,
             'category_id'=>1,
-            'price'=>$this->faker->randomFloat(10,320),
+            'price'=>rand(25,325),
+            'image_id'=>1,
             'file_id'=>1,
         ];
     }

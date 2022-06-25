@@ -16,9 +16,10 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            'name'=>$this->faker->word(random_int(1,4)),
-            'description'=>$this->faker->word(random_int(26,45))
+            'name'=>$this->faker->words(random_int(1,4),true),
+            'description'=>$this->faker->sentence(36)
         ];
     }
 }

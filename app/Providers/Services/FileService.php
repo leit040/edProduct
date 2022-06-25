@@ -15,11 +15,11 @@ class FileService implements FileInterface
             $data = [
                 'system_name' => Str::random(25) . '.' . $file->getClientOriginalExtension(),
                 'real_name' => $file->getClientOriginalName(),
-                'type' => $key,
+                'types' => $key,
             ];
             $file->storeAs('images/' .$key.'/',$data['system_name']);
             $file = File::create($data);
-            $return[$data['type']]=$file->id;
+            $return[$data['types']]=$file->id;
         }
     return $return;
     }

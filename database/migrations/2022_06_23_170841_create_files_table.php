@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('system_name');
             $table->string('real_name');
-            $table->string('type');
+            $table->string('types');
             $table->timestamps();
         });
     }

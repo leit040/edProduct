@@ -92,13 +92,13 @@
                     <a class="nav-link " aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                    <a class="nav-link" href="{{route('adminIndex')}}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Categories</a>
+                    <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Types</a>
+                    <a class="nav-link" href="{{route('types.index')}}">Types</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Users</a>

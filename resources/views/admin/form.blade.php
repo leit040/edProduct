@@ -4,14 +4,19 @@
 
 
 @section('content')
-    <h1>Create Product</h1>
-    <form action="{{route('createProduct')}}" method="POST" enctype="multipart/form-data">
+    @php
+    if(!isset($product))
+        $product = null
+    @endphp
+
+    <h1>@if(!$product)Create @else Update @endif Product</h1>
+    <form method="POST" @if(!$product)  action="{{route('storeProduct')}}"    enctype="multipart/form-data"> @else action="{{route('updateProduct',$product->id)}}" enctype="multipart/form-data"> @method('PUT') @endif
 
         @csrf
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Product title</span>
             <input type="text" class="form-control" placeholder="Product title" aria-label="Product title"
-                   aria-describedby="basic-addon1" name="title">
+                   aria-describedby="basic-addon1" name="title" value="{{old('title')??$product->title??''}}">
         </div>
             @if($errors->has('title'))
                 @foreach($errors->get('title') as $error)
@@ -23,7 +28,7 @@
 
         <div class="input-group mb-3">
             <span class="input-group-text">Product description</span>
-            <textarea class="form-control" aria-label="With textarea" name="description"></textarea>
+            <textarea class="form-control" aria-label="With textarea" name="description">{{old('description')??$product->description??''}}</textarea>
         </div>
         @if($errors->has('description'))
             @foreach($errors->get('description') as $error)
@@ -35,7 +40,7 @@
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Price ($)</span>
             <input type="text" class="form-control" placeholder="Product price" aria-label="Product price"
-                   aria-describedby="basic-addon1" name="price">
+                   aria-describedby="basic-addon1" name="price" value="{{old('price')??$product->price??''}}">
         </div>
         @if($errors->has('price'))
             @foreach($errors->get('price') as $error)
@@ -47,9 +52,17 @@
         <div class="input-group mb-3">
             <span class="input-group-text">Product category</span>
             <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="category_id">
-                <option selected>Product category</option>
-                @foreach($categories as $category)
-                    <option value="{{$category->id}}">{{$category->name}}</option>
+
+                @if((old('category_id')))
+                    {{$select_id=old('category_id')}}
+                @else {{$select_id=$product->category_id??''}}
+                @endif
+
+
+                @foreach($categories as $categoryforID)
+                    <option class="form-add__category__inner" @if ($categoryforID->id==old('category_id')) selected
+                            @endif value="{{$categoryforID->id}}">{{$categoryforID->name}}</option>
+
                 @endforeach
             </select>
         </div>
@@ -64,10 +77,22 @@
         <div class="input-group mb-3">
         <span class="input-group-text">Product type</span>
         <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="type_id">
-            <option selected>Product type</option>
-            @foreach($types as $type)
-            <option value="{{$type->id}}">{{$type->name}}</option>
-            @endforeach
+
+
+
+                @if((old('type_id')))
+                    {{$select_id=old('type_id')}}
+                @else {{$select_id=$product->type_id??''}}
+                @endif
+
+
+                @foreach($types as $typeforID)
+                    <option class="form-add__category__inner" @if ($typeforID->id==old('type_id')) selected
+                            @endif value="{{$typeforID->id}}">{{$typeforID->name}}</option>
+
+                @endforeach
+
+
         </select>
         </div>
             @if($errors->has('type_id'))

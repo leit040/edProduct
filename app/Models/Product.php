@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -19,4 +20,20 @@ class Product extends Model
             'image_id'
 
         ];
+
+    public function image(){
+        return $this->hasOne(File::class,'id','image_id');
+    }
+
+    public function file(){
+        return File::where('id',$this->file_id);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function type(){
+        return $this->belongsTo(Type::class);
+    }
 }

@@ -12,6 +12,11 @@ class File extends Model
         [
             'system_name',
             'real_name',
-            'type',
+            'types',
                     ];
+
+public function url(){
+    return asset('images/'.$this->type.'/'.$this->system_name);
+}
+
 }

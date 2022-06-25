@@ -16,11 +16,12 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(ProductFilter $filter)
     {
-
+        $products = Product::paginate(6);
+        return view('admin.index', compact('products'));
     }
 
     /**
@@ -32,27 +33,30 @@ class ProductController extends Controller
     {
         $types = Type::all();
         $categories = Category::all();
-        return view('admin.form',compact('types','categories'));
+        return view('admin.form', compact('types', 'categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreProductRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreProductRequest $request,ProductService $productService)
+    public function store(StoreProductRequest $request, ProductService $productService)
     {
-        $productData = $request->only('title','description','price','category_id','type_id');
+        $productData = $request->only('title', 'description', 'price', 'category_id', 'type_id');
         $productData['files'] = $request->allFiles();
         $model = $productService->create($productData);
-        dd($model);
+
+        if ($model) {
+            return redirect()->route('adminIndex');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -63,34 +67,44 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Product $product)
     {
-        //
+        $types = Type::all();
+        $categories = Category::all();
+        return view('admin.form', compact('types', 'categories', 'product'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateProductRequest $request
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product,ProductService $productService)
     {
-        //
+
+
+        $productData = $request->only('title', 'description', 'price', 'category_id', 'type_id');
+        $productData['files'] = $request->allFiles();
+        $model = $productService->update($productData, $product);
+
+        if ($model) {
+            return redirect()->route('adminIndex');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
-        //
+        dd($product);
     }
 }
