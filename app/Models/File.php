@@ -16,7 +16,7 @@ class File extends Model
                     ];
 
 public function url(){
-    return asset('images/'.$this->type.'/'.$this->system_name);
+    return asset('images/'.$this->types.'/'.$this->system_name);
 }
 
 }
