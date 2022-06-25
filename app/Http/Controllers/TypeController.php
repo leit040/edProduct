@@ -38,7 +38,7 @@ class TypeController extends Controller
     public function store(StoreTypeRequest $request)
     {
         Type::create($request->only('name', 'description'));
-        redirect()->route('types.index');
+       return redirect()->route('types.index');
     }
 
     /**
@@ -73,7 +73,7 @@ class TypeController extends Controller
     public function update(UpdateTypeRequest $request, Type $type)
     {
         $type->update($request->all());
-        redirect()->route('types.index');
+       return redirect()->route('types.index');
     }
 
     /**
@@ -87,6 +87,6 @@ class TypeController extends Controller
 
         $type->products()->delete();
         $type->delete();
-        redirect(route('types.index'));
+        return redirect()->route('types.index');
     }
 }
