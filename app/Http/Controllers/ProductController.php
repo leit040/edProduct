@@ -20,7 +20,8 @@ class ProductController extends Controller
      */
     public function index(ProductFilter $filter)
     {
-        $products = Product::paginate(6);
+
+        $products =  Product::filter($filter)->paginate(6);
         return view('admin.index', compact('products'));
     }
 
@@ -86,7 +87,6 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product,ProductService $productService)
     {
-
 
         $productData = $request->only('title', 'description', 'price', 'category_id', 'type_id');
         $productData['files'] = $request->allFiles();
