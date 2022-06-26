@@ -83,7 +83,7 @@ class ProductController extends Controller
      *
      * @param \App\Http\Requests\UpdateProductRequest $request
      * @param \App\Models\Product $product
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateProductRequest $request, Product $product,ProductService $productService)
     {
@@ -101,7 +101,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Product $product)
     {

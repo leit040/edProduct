@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('cc')->unique();
             $table->string('txt');
-            $table->float('rate');
+            $table->float('rate',16,8);
             $table->timestamps();
         });
     }

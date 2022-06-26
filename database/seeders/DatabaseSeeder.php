@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -42,5 +43,6 @@ class DatabaseSeeder extends Seeder
             $product->file_id = $file_id->id;
             $product->save();
         });
+        Artisan::call('fill:rates');
     }
 }
